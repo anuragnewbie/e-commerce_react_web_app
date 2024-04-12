@@ -10,6 +10,14 @@ const Login = () => {
     const [ userEmail, setUserEmail ] = React.useState('');
     const [ userPassword, setUserPassword ] = React.useState('');
 
+    const blockLoginIfUserExists = () => {
+      const userToken = localStorage.getItem('token');
+
+      if(userToken) {
+        window.location.href = "/allProducts";
+      }
+    }
+
     // handling user login
     const handleUserLogin = (event) => {
         event.preventDefault();
@@ -33,10 +41,14 @@ const Login = () => {
             });
     }
 
+    React.useEffect(() => {
+      blockLoginIfUserExists();
+    }, [])
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div>
+      <div style={{ marginTop: '50px' }}>
         <Typography sx={{ textAlign: 'center', marginBottom: '10px' }} component="h1" variant="h5">
           Login
         </Typography>
